@@ -93,37 +93,26 @@ $ajaxUtils.sendGetRequest(
 // Builds HTML for the home page based on categories array
 // returned from the server.
 function buildAndShowHomeHTML (categories) {
-
+showLoading("#main-content");
        $ajaxUtils.sendGetRequest(
-        homeHtmlUrl
+        homeHtmlUrl,
         function (homeHtmlUrl) {
           // Switch CSS class active to menu button
           switchMenuToActive();
 
-          var chosenCategoryShortName =
-            chooseRandomCategory(categories,
-                                    homeHtmlUrl);
-          insertHtml("#main-content", chosenCategoryShortName);
-        },
-        false);
-	
-	 },
-    false);
-}
+          var chosenCategoryShortName =  chooseRandomCategory(categories, homeHtmlUrl);
+		  
+            //chooseRandomCategory(categories,  homeHtmlUrl);
+            insertHtml("#main-content", homeHtmlUrl);
+       
   
  // TODO: STEP 2: Here, call chooseRandomCategory, passing it retrieved 'categories'
       // Pay attention to what type of data that function returns vs what the chosenCategoryShortName
       // variable's name implies it expects.
-      // var chosenCategoryShortName = ....
-      chooseRandomCategory(categories, homeHtmlUrl){
-		 
-	  // var homeHtmlToInsertIntoMainPage = homeHtmlUrl;
-	  var randomCategoryShortName = category.short_name;
-	  homeHtmlUrl = insertProperty(homeHtmlUrl, "SP", randomCategoryShortName);
-		
+      // var chosenCategoryShortName = ...
 	 
- }
-
+	  
+     
       // TODO: STEP 3: Substitute {{randomCategoryShortName}} in the home html snippet with the
       // chosen category from STEP 2. Use existing insertProperty function for that purpose.
       // Look through this code for an example of how to do use the insertProperty function.
@@ -147,6 +136,15 @@ function buildAndShowHomeHTML (categories) {
     false); // False here because we are getting just regular HTML from the server, so no need to process JSON.
 }
 
+chooseRandomCategory(categories, homeHtmlUrl){
+	
+	 var randomCategoryShortName = categories.short_name;
+	
+		 
+		 var html = homeHtmlUrl;
+		 html =  insertProperty(html,  "short_name",  randomCategoryShortName);
+	 
+}
 
 // Given array of category objects, returns a random category object.
 function chooseRandomCategory (categories) {
